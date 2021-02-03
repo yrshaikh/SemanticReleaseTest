@@ -4,6 +4,7 @@ on: [push]
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  NUGET_TOKEN:  ${{secrets.NUGET_TOKEN}}
 
 jobs:
   build:
@@ -35,3 +36,15 @@ jobs:
             @semantic-release/git@7.0.18
             @semantic-release/exec@3.3.8
             @semantic-release/changelog@3.0.0
+            
+  nuget:
+    needs: [publish]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: build
+        run: dotnet build --configuration Release -p:Version=${nextRelease.version}
+      - name: pack
+        run: dotnet pack --configuration Release --output ./artifacts -p:PackageVersion=${nextRelease.version}
+      - name: push
+        run: dotnet nuget push ./artifacts/*.nupkg --api-key ${ NUGET_TOKEN } --source https://api.nuget.org/v3/index.json
