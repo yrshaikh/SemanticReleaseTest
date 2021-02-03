@@ -37,6 +37,6 @@ jobs:
             @semantic-release/git@7.0.18
             @semantic-release/exec@3.3.8
             @semantic-release/changelog@3.0.0      
-      - name: Nuget build, pack and push
+      - name: Nuget build, pack and push..
         run: |
           dotnet build --configuration Release -p:Version=${{ steps.semantic_release.outputs.new_release_version }}
