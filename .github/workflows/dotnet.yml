@@ -22,7 +22,7 @@ jobs:
     - name: Test
       run: dotnet test --verbosity normal
       
-  semantic_release:
+  semantic_release_and_nuget_publish:
     needs: [ build ]
     runs-on: ubuntu-latest
 
@@ -37,19 +37,7 @@ jobs:
             @semantic-release/git@7.0.18
             @semantic-release/exec@3.3.8
             @semantic-release/changelog@3.0.0
-    outputs:
-      new_release_version: ${{ steps.semantic_release.outputs.new_release_version }}
-            
-  nuget:
-    needs: [semantic_release]
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: debug
-        run: echo ${{ needs.semantic_release.outputs.new_release_version }}
-      - name: build
-        run: dotnet build --configuration Release -p:Version=${{ needs.semantic_release.outputs.new_release_version }}
-      - name: pack
-        run: dotnet pack --configuration Release --output ./artifacts -p:PackageVersion=${{ needs.semantic_release.outputs.new_release_version }}
-      - name: push
-        run: dotnet nuget push ./artifacts/*.nupkg --api-key ${ NUGET_TOKEN } --source https://api.nuget.org/v3/index.json
+      
+      - name: Nuget build, pack and push
+        run: |
+          dotnet build --configuration Release -p:Version=${{ jobs.semantic_release.outputs.new_release_version }}
