@@ -6,7 +6,7 @@ namespace Library
     {
         public static string GetHelloWorld()
         {
-            return "HelloWorld"; // test comment
+            return "HelloWorld"; // test comment1
         }
     }
 }
