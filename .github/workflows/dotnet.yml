@@ -47,8 +47,6 @@ jobs:
     steps:
       - name: debug
         run: echo ${{ needs.semantic_release.outputs.new_release_version }}
-      - name: debug2
-        run: echo ${{ semantic_release.outputs.new_release_version }}
       - name: build
         run: dotnet build --configuration Release -p:Version=${{ needs.semantic_release.outputs.new_release_version }}
       - name: pack
