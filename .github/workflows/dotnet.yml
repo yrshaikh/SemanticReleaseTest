@@ -36,6 +36,11 @@ jobs:
           extra_plugins: |
             @semantic-release/git@7.0.18
             @semantic-release/exec@3.3.8
-            @semantic-release/changelog@3.0.0      
-      - name: Nuget build, pack and push..
-        run: dotnet build --configuration Release -p:Version=${{ steps.semantic.outputs.new_release_version }}
+            @semantic-release/changelog@3.0.0   
+      - name: Do something when a new release published
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
+          echo ${{ steps.semantic.outputs.new_release_major_version }}
+          echo ${{ steps.semantic.outputs.new_release_minor_version }}
+          echo ${{ steps.semantic.outputs.new_release_patch_version }}
