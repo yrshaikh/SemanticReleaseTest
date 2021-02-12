@@ -1,5 +1,10 @@
 module.exports = {
     branches: ['main'],
+    "plugins": [
+        "@semantic-release/git",
+        "@semantic-release/exec",
+        "@semantic-release/changelog"
+    ],
     "verifyConditions": ["@semantic-release/github"],
     "prepare": 
     [
