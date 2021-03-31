@@ -1,5 +1,11 @@
 module.exports = {
     branches: ['main'],
+    "releaseRules": [
+        {"type": "docs", "release": "patch"},
+        {"type": "refactor", "release": "patch"},
+        {"type": "chore", "release": "patch"},
+        {"type": "breaking change", "release": "major"}
+      ],
     "verifyConditions": ["@semantic-release/github"],
     "prepare": 
     [
